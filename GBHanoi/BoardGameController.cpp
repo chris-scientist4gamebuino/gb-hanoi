@@ -58,17 +58,17 @@ void BoardGameController::manageCommands() {
   } else if(!isEnd && isTowerInit) {
     if(gb.buttons.pressed(BUTTON_RIGHT)) {
       do {
-        indexSelectedTower = (indexSelectedTower == 2/*3*/ ? 0 : indexSelectedTower + 1);
+        indexSelectedTower = (indexSelectedTower == 3 ? 0 : indexSelectedTower + 1);
       } while(boardGameModel->getIndexTower(indexSelectedTower) == boardGameModel->getStartIndexTower());
     } else if(gb.buttons.pressed(BUTTON_LEFT)) {
       do {
-        indexSelectedTower = (indexSelectedTower == 0 ? 2/*3*/ : indexSelectedTower - 1);
+        indexSelectedTower = (indexSelectedTower == 0 ? 3 : indexSelectedTower - 1);
       } while(boardGameModel->getIndexTower(indexSelectedTower) == boardGameModel->getStartIndexTower());
     } else if(gb.buttons.pressed(BUTTON_A)) {
       boardGameModel->setEndIndexTower(indexSelectedTower);
       // Par défaut, l'index est sur la tour qui contient tout les anneaux
       while(boardGameModel->getStartIndexTower() != boardGameModel->getIndexTower(indexSelectedTower)) {
-        indexSelectedTower = (indexSelectedTower == 2 ? 0 : indexSelectedTower + 1);
+        indexSelectedTower = (indexSelectedTower >= 2 ? 0 : indexSelectedTower + 1);
       }
       isEnd = true;
       isGame = true;
