@@ -25,6 +25,5 @@ void loop() {
   // effacer l'écran
   gb.display.clear();
 
-  controller->manageCommands();
-  controller->paint();
+  controller->run();
 }

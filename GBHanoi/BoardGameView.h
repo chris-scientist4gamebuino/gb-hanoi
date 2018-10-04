@@ -11,6 +11,7 @@
 #include "ItemLinkedList.h"
 #include "TowerModel.h"
 #include "BoardGameModel.h"
+#include "Lang.h"
 
 class BoardGameView {
   private:
@@ -19,6 +20,7 @@ class BoardGameView {
     void paintTower(TowerModel * aTower);
     void paintBackground();
     void paintArrow(int anIndexTower);
+    void paintStartFlag(int anIndexTower);
     void paintFinishFlag(int anIndexTower);
     void paintRingSelected(RingModel * aRing);
   public:

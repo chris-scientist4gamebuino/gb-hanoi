@@ -35,9 +35,14 @@ void BoardGameView::paint(int anIndexTower4Arrow, bool isGame) {
   } else if(anIndexTower4Arrow == TOWER_NO_END) {
     // Afficher les index des tours de destination
     const int * indexTowers = model->getEndIndexTowers();
-    gb.display.printf("%d ou %d", indexTowers[0], indexTowers[1]);
+    gb.display.printf("%d %s %d", indexTowers[0], Lang::getOr(), indexTowers[1]);
   }
 
+  // Dessiner le drapeau marquant la position de fin
+  if(model->getStartIndexTower() != TOWER_NO_END) {
+    paintStartFlag(model->getStartIndexTower());
+  }
+  
   // Dessiner le drapeau marquant la position d'arrivée
   if(model->getEndIndexTower() != TOWER_NO_END) {
     paintFinishFlag(model->getEndIndexTower());
@@ -76,6 +81,11 @@ void BoardGameView::paintArrow(int anIndexTower) {
   int x = 12 + (anIndexTower * 26) - 26;
   gb.display.fillRect(x, 8, 4, 1);
   gb.display.fillRect(x+1, 9, 2, 1);
+}
+
+void BoardGameView::paintStartFlag(int anIndexTower) {
+  int x = 1 + (anIndexTower * 26) - 26;
+  gb.display.drawImage(x, 40, SpritesManager::getStartFlag());
 }
 
 void BoardGameView::paintFinishFlag(int anIndexTower) {

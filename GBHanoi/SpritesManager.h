@@ -30,6 +30,8 @@ class SpritesManager {
     static Image ring6;
     static bool ring7Initialized;
     static Image ring7;
+    static bool startFlagInitialized;
+    static Image startFlag;
 
     static Image& getRing1();
     static Image& getRing2();
@@ -42,6 +44,7 @@ class SpritesManager {
     static Image& getFinishFlag();
     static Image& getTower();
     static Image& getRing(const int aIndexOfRing);
+    static Image& getStartFlag();
 };
 
 #endif

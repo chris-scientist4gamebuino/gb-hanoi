@@ -12,6 +12,7 @@
 #include "BoardGameView.h"
 #include "Window.h"
 #include "GameStateManager.h"
+#include "Lang.h"
 
 class BoardGameController {
   private:
@@ -21,10 +22,11 @@ class BoardGameController {
     int indexSelectedTower;
     
     void resetGame();
-  public:
-    BoardGameController(BoardGameModel * aBoardGameModel, BoardGameView * aBoardGameView);
     void manageCommands();
     void paint();
+  public:
+    BoardGameController(BoardGameModel * aBoardGameModel, BoardGameView * aBoardGameView);
+    void run();
 };
 
 #endif
