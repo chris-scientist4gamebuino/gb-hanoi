@@ -1,9 +1,9 @@
 
 # Met'hanoï
 
-v0.0.3
+v0.0.4
 
-Version du programme v0.2.0
+Version du programme v0.3.0
 
 Résolvez le casse-tête des tours d'Hanoï ! Ce jeu est conçu pour la Gamebuino META.
 
