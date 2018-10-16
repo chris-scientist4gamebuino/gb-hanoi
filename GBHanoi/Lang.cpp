@@ -1,6 +1,6 @@
 // author: chris-scientist
 // created at: 03/10/2018
-// updated at: 04/10/2018
+// updated at: 16/10/2018
 
 #include "Lang.h"
 
@@ -16,6 +16,8 @@ const char* Lang::getBackPartFR = "(A) reprendre partie";
 const char* Lang::getBackPartEN = "(A) get back part";
 const char* Lang::goToMenuFR = "(B) acceder au menu";
 const char* Lang::goToMenuEN = "(B) go to menu";
+const char* Lang::highScoreFR = "Meilleurs scores";
+const char* Lang::highScoreEN = "High score";
 const char* Lang::newPartFR = "Nouvelle partie";
 const char* Lang::newPartEN = "New part";
 const char* Lang::orFR = "ou";
@@ -24,6 +26,8 @@ const char* Lang::startFR = "Depart";
 const char* Lang::startEN = "Start";
 const char* Lang::toRetryFR = "(A) pour recommencer";
 const char* Lang::toRetryEN = "(A) to retry";
+const char* Lang::yourPseudoFR = "Votre pseudo";
+const char* Lang::yourPseudoEN = "Your pseudo";
 
 const bool Lang::isEnglishLanguage() {
   return (gb.language.getCurrentLang() == LANG_EN);
@@ -83,6 +87,15 @@ const char* Lang::getGoToMenu() {
   return gb.language.get(goToMenuLang);
 }
 
+const char* Lang::getHighScore() {
+  const MultiLang highScoreLang[] = {
+    { LANG_EN, Lang::highScoreEN },
+    { LANG_FR, Lang::highScoreFR }
+  };
+
+  return gb.language.get(highScoreLang);
+}
+
 const char* Lang::getNewPart() {
   const MultiLang newPartLang[] = {
     { LANG_EN, Lang::newPartEN },
@@ -117,5 +130,14 @@ const char* Lang::getToRetry() {
   };
 
   return gb.language.get(toRetryLang);
+}
+
+const char* Lang::getYourPseudo() {
+  const MultiLang yourPseudoLang[] = {
+    { LANG_EN, Lang::yourPseudoEN },
+    { LANG_FR, Lang::yourPseudoFR }
+  };
+
+  return gb.language.get(yourPseudoLang);
 }
   

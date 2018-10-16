@@ -13,12 +13,16 @@
 #include "Window.h"
 #include "GameStateManager.h"
 #include "Lang.h"
+#include "TimeModel.h"
+#include "HighScoreManager.h"
 
 class BoardGameController {
   private:
     BoardGameModel * boardGameModel;
     BoardGameView * boardGameView;
     GameStateManager * stateManager;
+    TimeModel * timeModel;
+    HighScoreManager * scoreManager;
     int indexSelectedTower;
     
     void resetGame();

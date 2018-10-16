@@ -44,6 +44,10 @@ bool GameStateManager::isFinishState() const {
   return states[indexOfState] == FINISH_STATE;
 }
 
+bool GameStateManager::isHighScoreState() const {
+  return states[indexOfState] == HIGH_SCORE_STATE;
+}
+
 bool GameStateManager::isAboutState() const {
   return states[indexOfState] == ABOUT_STATE;
 }

@@ -8,7 +8,7 @@ BoardGameView::BoardGameView(BoardGameModel * aModel) : model(aModel) {
   
 }
 
-void BoardGameView::paint(int anIndexTower4Arrow, bool isGame) {
+void BoardGameView::paint(int anIndexTower4Arrow, bool isGame, const int * aTime) {
   // Dessiner les tours vides
   paintBackground();
   
@@ -46,6 +46,11 @@ void BoardGameView::paint(int anIndexTower4Arrow, bool isGame) {
   // Dessiner le drapeau marquant la position d'arrivée
   if(model->getEndIndexTower() != TOWER_NO_END) {
     paintFinishFlag(model->getEndIndexTower());
+  }
+
+  // Afficher le temps
+  if(isGame) {
+    paintTimer(aTime);
   }
 }
 
@@ -96,5 +101,40 @@ void BoardGameView::paintFinishFlag(int anIndexTower) {
 void BoardGameView::paintRingSelected(RingModel * aRing) {
   int x = 1 + (aRing->getCurTowerIndex() * 26) - 26;
   gb.display.drawImage(x, 7, SpritesManager::getRing(aRing->getIndex()));
+}
+
+void BoardGameView::paintTimer(const int * aTime) {
+  gb.display.setFontSize(1);
+  gb.display.setColor(WHITE);
+  gb.display.println("");
+  gb.display.println("");
+  gb.display.println("");
+  gb.display.println("");
+  gb.display.println("");
+  gb.display.println("");
+  gb.display.println("");
+  gb.display.println("");
+  // Afficher les jours (s'il y en a)
+  int nbDays = aTime[TimeModel::DAYS_NUMBER];
+  if(nbDays > 0) {
+    gb.display.printf("%d d ", nbDays);
+  }
+  
+  // Afficher les heures, minutes et secondes
+  int nbHours = aTime[TimeModel::HOURS_NUMBER];
+  if(nbHours < 10) {
+    gb.display.print("0");
+  }
+  gb.display.printf("%d h ", nbHours);
+  int nbMinutes = aTime[TimeModel::MINUTES_NUMBER];
+  if(nbMinutes < 10) {
+    gb.display.print("0");
+  }
+  gb.display.printf("%d m ", nbMinutes);
+  int nbSeconds = aTime[TimeModel::SECONDS_NUMBER];
+  if(nbSeconds < 10) {
+    gb.display.print("0");
+  }
+  gb.display.printf("%d s", nbSeconds);
 }
 

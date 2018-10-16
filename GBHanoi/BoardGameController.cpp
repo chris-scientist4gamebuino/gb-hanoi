@@ -1,6 +1,6 @@
 // author: chris-scientist
 // created at: 30/09/2018
-// updated at: 04/10/2018
+// updated at: 16/10/2018
 
 #include "BoardGameController.h"
 
@@ -8,9 +8,12 @@ BoardGameController::BoardGameController(BoardGameModel * aBoardGameModel, Board
   boardGameModel(aBoardGameModel), 
   boardGameView(aBoardGameView),  
   indexSelectedTower(1), 
-  stateManager(new GameStateManager())
+  stateManager(new GameStateManager()),
+  timeModel(new TimeModel()),
+  scoreManager(new HighScoreManager())
 {
-  
+  // On charge les meilleurs scores sauvegardés
+  scoreManager->loadAllHighScore();
 }
 
 void BoardGameController::run() {
@@ -30,6 +33,17 @@ void BoardGameController::manageCommands() {
       stateManager->nextState();
     }
     
+  } else if(stateManager->isHighScoreState()) {
+    // Si nous sommes sur l'écran des meilleurs scores...
+
+    if(gb.buttons.pressed(BUTTON_B)) {
+      scoreManager->resetIndexNewHighScore();
+      //
+      // Afficher le menu
+      //
+      stateManager->setState(GameStateManager::MENU_STATE);
+    }
+    
   } else if(stateManager->isPauseState()) {
     // Si la partie est en pause...
 
@@ -37,7 +51,14 @@ void BoardGameController::manageCommands() {
       //
       // Retourner à la partie
       //
+
+      // Démarrer le chonomètre
+      if(timeModel->getTempTime() == 0) {
+        timeModel->initTime();
+      }
+      
       stateManager->setState(GameStateManager::GAME_STATE);
+      
     } else if(gb.buttons.pressed(BUTTON_B)) {
       //
       // Accéder au menu (et réinitiliser le jeu)
@@ -64,12 +85,29 @@ void BoardGameController::manageCommands() {
     }
     
   } else if(boardGameModel->isFinish(stateManager->isGameState())) {
-    // Si la partie en cours est finie alors on modifie l'état
-    
-    stateManager->setState(GameStateManager::FINISH_STATE);
+    // Si la partie en cours est finie
+
+    // On arrête le chronomètre
+    timeModel->pause();
+
+    // On vérifie si le temps obtenu est un meilleur score
+    const unsigned int timeOfPart = timeModel->getTimeInSeconds();
+    if( scoreManager->saveScoreIfNewHighScore(timeOfPart) ) {
+      resetGame();
+      // On modifie l'état
+      stateManager->setState(GameStateManager::HIGH_SCORE_STATE);
+    } else {
+      // On modifie l'état
+      stateManager->setState(GameStateManager::FINISH_STATE);
+    }
     
   } else if(stateManager->isGameState()) {
     // Si une partie est en cours...
+
+    //
+    // Incrémenter le chronomètre
+    //
+    timeModel->incrementTime();
     
     if(gb.buttons.pressed(BUTTON_RIGHT)) {
       //
@@ -124,6 +162,10 @@ void BoardGameController::manageCommands() {
       //
       // Mettre en pause
       //
+      
+      // Mettre en pause le chronomètre
+      timeModel->pause();
+      
       stateManager->nextState();
     }
     
@@ -153,6 +195,13 @@ void BoardGameController::manageCommands() {
       while(boardGameModel->getStartIndexTower() != boardGameModel->getIndexTower(indexSelectedTower)) {
         indexSelectedTower = (indexSelectedTower >= 2 ? 0 : indexSelectedTower + 1);
       }
+      //
+      // Démarrer le chonomètre
+      //
+      if(timeModel->getTempTime() == 0) {
+        timeModel->initTime();
+      }
+      
       stateManager->nextState();
     }
     
@@ -178,6 +227,11 @@ void BoardGameController::manageCommands() {
       indexSelectedTower = (indexSelectedTower == 2 ? 0 : indexSelectedTower + 1);
       // Si la tour de départ est sélectionnée alors on l'initialise
       boardGameModel->initTower();
+      //
+      // Réinitialiser le chronomètre
+      //
+      timeModel->reset();
+      
       stateManager->nextState();
     }
     
@@ -200,6 +254,9 @@ void BoardGameController::paint() {
         stateManager->nextState();
       break;
       case 1:
+        stateManager->setState(GameStateManager::HIGH_SCORE_STATE);
+      break;
+      case 2:
         stateManager->setState(GameStateManager::ABOUT_STATE);
       break;
     }
@@ -209,6 +266,12 @@ void BoardGameController::paint() {
     // Afficher les crédits
     //
     Window::paintAboutWindow();
+    
+  } else if(stateManager->isHighScoreState()) {
+    //
+    // Afficher les meilleurs scores
+    //
+    Window::paintHighScoreWindow(scoreManager);
     
   } else if(! stateManager->isFinishState()) {
     //
@@ -220,7 +283,7 @@ void BoardGameController::paint() {
       gb.display.print(Lang::getEnd());
     }
     
-    boardGameView->paint((stateManager->isSetStartState() || stateManager->isSetEndState() || stateManager->isGameState()) ? boardGameModel->getIndexTower(indexSelectedTower) : -1, stateManager->isGameState());
+    boardGameView->paint((stateManager->isSetStartState() || stateManager->isSetEndState() || stateManager->isGameState()) ? boardGameModel->getIndexTower(indexSelectedTower) : -1, stateManager->isGameState(), timeModel->getTime());
     
   } else {
     //

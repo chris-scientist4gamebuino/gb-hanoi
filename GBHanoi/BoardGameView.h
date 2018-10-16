@@ -12,6 +12,7 @@
 #include "TowerModel.h"
 #include "BoardGameModel.h"
 #include "Lang.h"
+#include "TimeModel.h"
 
 class BoardGameView {
   private:
@@ -23,9 +24,10 @@ class BoardGameView {
     void paintStartFlag(int anIndexTower);
     void paintFinishFlag(int anIndexTower);
     void paintRingSelected(RingModel * aRing);
+    void paintTimer(const int * aTime);
   public:
     BoardGameView(BoardGameModel * aModel);
-    void paint(int anIndexTower4Arrow, bool isGame);
+    void paint(int anIndexTower4Arrow, bool isGame, const int * aTime);
 };
 
 #endif

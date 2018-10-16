@@ -1,6 +1,6 @@
 // author: chris-scientist
 // created at: 03/10/2018
-// updated at: 04/10/2018
+// updated at: 16/10/2018
 
 #ifndef LANG
 #define LANG
@@ -21,6 +21,8 @@ class Lang {
     static const char* getBackPartEN;
     static const char* goToMenuFR;
     static const char* goToMenuEN;
+    static const char* highScoreFR;
+    static const char* highScoreEN;
     static const char* newPartFR;
     static const char* newPartEN;
     static const char* orFR;
@@ -29,6 +31,8 @@ class Lang {
     static const char* startEN;
     static const char* toRetryFR;
     static const char* toRetryEN;
+    static const char* yourPseudoFR;
+    static const char* yourPseudoEN;
 
     static const bool isEnglishLanguage();
     static const char* getAbout();
@@ -37,10 +41,12 @@ class Lang {
     static const char* getEnd();
     static const char* getGetBackPart();
     static const char* getGoToMenu();
+    static const char* getHighScore();
     static const char* getNewPart();
     static const char* getOr();
     static const char* getStart();
     static const char* getToRetry();
+    static const char* getYourPseudo();
 };
 
 #endif
