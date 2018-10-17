@@ -98,12 +98,14 @@ void Window::paintHighScoreWindow(HighScoreManager * aScoreManager) {
   gb.display.println();
   gb.display.println();
   gb.display.println();
+  gb.display.setColor(WHITE);
   gb.display.print(Lang::getGoToMenu());
 }
 
 const int Window::paintMenu() {
   const char* items[] = {
     Lang::getNewPart(),
+    Lang::getRandomMode(),
     Lang::getHighScore(),
     Lang::getAbout()
   };
@@ -111,6 +113,8 @@ const int Window::paintMenu() {
   const uint8_t indexItem = gb.gui.menu("Menu", items);
   int choice = 0;
   if(items[indexItem] == Lang::aboutFR || items[indexItem] == Lang::aboutEN) {
+    choice = 3;
+  } else if(items[indexItem] == Lang::randomModeFR || items[indexItem] == Lang::randomModeEN) {
     choice = 2;
   } else if(items[indexItem] == Lang::highScoreFR || items[indexItem] == Lang::highScoreEN) {
     choice = 1;

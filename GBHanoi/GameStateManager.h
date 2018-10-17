@@ -14,7 +14,8 @@ class GameStateManager {
     static const int PAUSE_STATE = 50;
     static const int FINISH_STATE = 60;
     static const int HIGH_SCORE_STATE = 70;
-    static const int ABOUT_STATE = 80;
+    static const int INIT_RANDOM_MODE_STATE = 80;
+    static const int ABOUT_STATE = 90;
     
     GameStateManager();
     void nextState();
@@ -26,12 +27,13 @@ class GameStateManager {
     bool isPauseState() const;
     bool isFinishState() const;
     bool isHighScoreState() const;
+    bool isInitRandomMode() const;
     bool isAboutState() const;
   private:
-    static const int NB_STATE = 8;
+    static const int NB_STATE = 9;
   
     int indexOfState;
-    const int states[NB_STATE] = { MENU_STATE, SET_START_STATE, SET_END_STATE, GAME_STATE, PAUSE_STATE, FINISH_STATE, HIGH_SCORE_STATE, ABOUT_STATE };
+    const int states[NB_STATE] = { MENU_STATE, SET_START_STATE, SET_END_STATE, GAME_STATE, PAUSE_STATE, FINISH_STATE, HIGH_SCORE_STATE, INIT_RANDOM_MODE_STATE, ABOUT_STATE };
 };
 
 #endif

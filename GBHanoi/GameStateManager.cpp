@@ -48,6 +48,10 @@ bool GameStateManager::isHighScoreState() const {
   return states[indexOfState] == HIGH_SCORE_STATE;
 }
 
+bool GameStateManager::isInitRandomMode() const {
+  return states[indexOfState] == INIT_RANDOM_MODE_STATE;
+}
+
 bool GameStateManager::isAboutState() const {
   return states[indexOfState] == ABOUT_STATE;
 }

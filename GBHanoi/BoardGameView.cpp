@@ -8,7 +8,7 @@ BoardGameView::BoardGameView(BoardGameModel * aModel) : model(aModel) {
   
 }
 
-void BoardGameView::paint(int anIndexTower4Arrow, bool isGame, const int * aTime) {
+void BoardGameView::paint(int anIndexTower4Arrow, bool isGame, const int * aTime, bool showTime) {
   // Dessiner les tours vides
   paintBackground();
   
@@ -49,7 +49,7 @@ void BoardGameView::paint(int anIndexTower4Arrow, bool isGame, const int * aTime
   }
 
   // Afficher le temps
-  if(isGame) {
+  if(isGame && showTime) {
     paintTimer(aTime);
   }
 }

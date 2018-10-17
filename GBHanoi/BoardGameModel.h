@@ -1,9 +1,11 @@
 // author: chris-scientist
 // created at: 29/09/2018
-// updated at: 02/10/2018
+// updated at: 17/10/2018
 
 #ifndef BOARDGAMEMODEL
 #define BOARDGAMEMODEL
+
+#include <Gamebuino-Meta.h>
 
 #include "Constantes.h"
 #include "LinkedList.h"
@@ -27,6 +29,7 @@ class BoardGameModel {
   public:
     BoardGameModel();
     void initTower();
+    void initRandomTower();
     void resetTower();
     TowerModel * getTower1();
     TowerModel * getTower2();

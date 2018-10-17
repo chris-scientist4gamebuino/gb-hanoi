@@ -15,6 +15,7 @@
 #include "Lang.h"
 #include "TimeModel.h"
 #include "HighScoreManager.h"
+#include "GameModeManager.h"
 
 class BoardGameController {
   private:
@@ -23,6 +24,7 @@ class BoardGameController {
     GameStateManager * stateManager;
     TimeModel * timeModel;
     HighScoreManager * scoreManager;
+    GameModeManager * modeManager;
     int indexSelectedTower;
     
     void resetGame();

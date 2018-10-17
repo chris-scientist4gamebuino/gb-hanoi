@@ -18,10 +18,12 @@ const char* Lang::goToMenuFR = "(B) acceder au menu";
 const char* Lang::goToMenuEN = "(B) go to menu";
 const char* Lang::highScoreFR = "Meilleurs scores";
 const char* Lang::highScoreEN = "High score";
-const char* Lang::newPartFR = "Nouvelle partie";
-const char* Lang::newPartEN = "New part";
+const char* Lang::newPartFR = "Mode classique";
+const char* Lang::newPartEN = "New part (classic)";
 const char* Lang::orFR = "ou";
 const char* Lang::orEN = "or";
+const char* Lang::randomModeFR = "Mode aleatoire";
+const char* Lang::randomModeEN = "New part (random)";
 const char* Lang::startFR = "Depart";
 const char* Lang::startEN = "Start";
 const char* Lang::toRetryFR = "(A) pour recommencer";
@@ -112,6 +114,15 @@ const char* Lang::getOr() {
   };
 
   return gb.language.get(orLang);
+}
+
+const char* Lang::getRandomMode() {
+  const MultiLang randomModeLang[] = {
+    { LANG_EN, Lang::randomModeEN },
+    { LANG_FR, Lang::randomModeFR }
+  };
+
+  return gb.language.get(randomModeLang);
 }
 
 const char* Lang::getStart() {

@@ -1,6 +1,6 @@
 // author: chris-scientist
 // created at: 29/09/2018
-// updated at: 02/10/2018
+// updated at: 17/10/2018
 
 #include "BoardGameModel.h"
 
@@ -43,6 +43,58 @@ void BoardGameModel::initTower() {
   // initialisation de la tour
   ItemLinkedList<RingModel *> * item = listOfRing->getLastItem();
   for(int i=0 ; i<listOfRing->getSize() ; i++) {
+    tower->addRing(item->getValue());
+    if(item->havePrevious()) {
+      item = item->getPrevious();
+    }
+  }
+}
+
+// Initialisation des tours pour le mode aléatoire
+void BoardGameModel::initRandomTower() {
+  // on supprime les éventuels anneaux qui sont affectés aux tours
+  tower1->resetTower();
+  tower2->resetTower();
+  tower3->resetTower();
+
+  int startTower = random(0, 3);
+
+  // initialisation des tours
+  int oldIndex = 0;
+  ItemLinkedList<RingModel *> * item = listOfRing->getLastItem();
+  for(int i=0 ; i<listOfRing->getSize() ; i++) {
+    // sélection de la tour
+    int index = random(1, 3);
+    if(i == 0) {
+      index = random(0, 3);
+    } else {
+      int tmpIndex = oldIndex;
+      for(int j = 0 ; j<index ; j++) {
+        if(tmpIndex == 2) {
+          tmpIndex = 0;
+        } else {
+          tmpIndex++;
+        }
+      }
+      index = tmpIndex;
+      // sélection de la tour de destination
+      if(i == 1) {
+        setEndIndexTower(index);
+      }
+    }
+    oldIndex = index;
+    int indexTower = towersIndex[index];
+    TowerModel * tower = tower2;
+    switch(indexTower) {
+      case TOWER_1:
+        tower = tower1;
+      break;
+      case TOWER_3:
+        tower = tower3;
+      break;
+    }
+
+    // Ajout de l'anneau à la tour sélectionnée
     tower->addRing(item->getValue());
     if(item->havePrevious()) {
       item = item->getPrevious();

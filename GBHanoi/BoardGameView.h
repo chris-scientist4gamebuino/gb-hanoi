@@ -27,7 +27,7 @@ class BoardGameView {
     void paintTimer(const int * aTime);
   public:
     BoardGameView(BoardGameModel * aModel);
-    void paint(int anIndexTower4Arrow, bool isGame, const int * aTime);
+    void paint(int anIndexTower4Arrow, bool isGame, const int * aTime, bool showTime);
 };
 
 #endif

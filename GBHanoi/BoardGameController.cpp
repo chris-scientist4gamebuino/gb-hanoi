@@ -10,7 +10,8 @@ BoardGameController::BoardGameController(BoardGameModel * aBoardGameModel, Board
   indexSelectedTower(1), 
   stateManager(new GameStateManager()),
   timeModel(new TimeModel()),
-  scoreManager(new HighScoreManager())
+  scoreManager(new HighScoreManager()),
+  modeManager(new GameModeManager())
 {
   // On charge les meilleurs scores sauvegardés
   scoreManager->loadAllHighScore();
@@ -18,6 +19,21 @@ BoardGameController::BoardGameController(BoardGameModel * aBoardGameModel, Board
 
 void BoardGameController::run() {
   manageCommands();
+  
+  if(stateManager->isInitRandomMode()) {
+    // Si le mode aléatoire doit être initialisé...
+
+    // Initialiser les tours
+    boardGameModel->initRandomTower();
+    // Initialiser l'index du curseur
+    while(boardGameModel->getTower(boardGameModel->getIndexTower(indexSelectedTower))->getListOfRing()->isEmpty()) {
+      indexSelectedTower = (indexSelectedTower == 2 ? 0 : indexSelectedTower + 1);
+    }
+    // Aller au jeu
+    stateManager->setState(GameStateManager::GAME_STATE);
+    
+  }
+  
   paint();
 }
 
@@ -74,8 +90,12 @@ void BoardGameController::manageCommands() {
       //
       // Refaire une partie (et réinitialiser le jeu)
       //
-      resetGame();
-      stateManager->setState(GameStateManager::SET_START_STATE);
+      if(modeManager->isClassicMode()) {
+        resetGame();
+        stateManager->setState(GameStateManager::SET_START_STATE);
+      } else {
+        stateManager->setState(GameStateManager::INIT_RANDOM_MODE_STATE);
+      }
     } else if(gb.buttons.pressed(BUTTON_B)) {
       //
       // Accéder au menu (et réinitialiser le jeu)
@@ -92,7 +112,7 @@ void BoardGameController::manageCommands() {
 
     // On vérifie si le temps obtenu est un meilleur score
     const unsigned int timeOfPart = timeModel->getTimeInSeconds();
-    if( scoreManager->saveScoreIfNewHighScore(timeOfPart) ) {
+    if( modeManager->isClassicMode() && scoreManager->saveScoreIfNewHighScore(timeOfPart) ) {
       resetGame();
       // On modifie l'état
       stateManager->setState(GameStateManager::HIGH_SCORE_STATE);
@@ -251,12 +271,17 @@ void BoardGameController::paint() {
     //
     switch(Window::paintMenu()) {
       case 0:
+        modeManager->setSelectedMode(GameModeManager::CLASSIC_MODE);
         stateManager->nextState();
       break;
       case 1:
         stateManager->setState(GameStateManager::HIGH_SCORE_STATE);
       break;
       case 2:
+        modeManager->setSelectedMode(GameModeManager::RANDOM_MODE);
+        stateManager->setState(GameStateManager::INIT_RANDOM_MODE_STATE);
+      break;
+      case 3:
         stateManager->setState(GameStateManager::ABOUT_STATE);
       break;
     }
@@ -283,7 +308,11 @@ void BoardGameController::paint() {
       gb.display.print(Lang::getEnd());
     }
     
-    boardGameView->paint((stateManager->isSetStartState() || stateManager->isSetEndState() || stateManager->isGameState()) ? boardGameModel->getIndexTower(indexSelectedTower) : -1, stateManager->isGameState(), timeModel->getTime());
+    boardGameView->paint(
+      (stateManager->isSetStartState() || stateManager->isSetEndState() || stateManager->isGameState()) ? boardGameModel->getIndexTower(indexSelectedTower) : -1, stateManager->isGameState(), 
+      timeModel->getTime(),
+      modeManager->isClassicMode()
+    );
     
   } else {
     //

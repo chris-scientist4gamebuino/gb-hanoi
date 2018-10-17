@@ -27,6 +27,8 @@ class Lang {
     static const char* newPartEN;
     static const char* orFR;
     static const char* orEN;
+    static const char* randomModeFR;
+    static const char* randomModeEN;
     static const char* startFR;
     static const char* startEN;
     static const char* toRetryFR;
@@ -44,6 +46,7 @@ class Lang {
     static const char* getHighScore();
     static const char* getNewPart();
     static const char* getOr();
+    static const char* getRandomMode();
     static const char* getStart();
     static const char* getToRetry();
     static const char* getYourPseudo();
