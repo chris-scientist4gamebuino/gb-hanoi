@@ -13,7 +13,9 @@ Cette version du programme est en cours de conception. Si vous souhaitez jouer a
 
 - Passer d'un affichage en 80x64 à 160x128, en 16 couleurs indexées !
 - Améliorer les UI (faire un menu à la `Power META` notamment).
+- Enregistrer/reprendre une partie.
 - Ajouter des effets de lumière grâce aux 8 LEDs RGB !
+- Afficher des stats : parties classiques lancées, parties aléatoires lancées, parties classiques terminées, parties aléatoires terminées (et les totaux).
 - Implémenter le modèle MVC (pas un pseudo MVC comme cela peut être le cas sur la 1.0.0) et des modèles de conception reconnus !
 
 ### Contrainte(s)
